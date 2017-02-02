@@ -54,7 +54,11 @@ setInterval(function(){
     var current_date=moment(new Date());
     var duration=moment.duration(current_date.diff(media_date)).asHours();
     duration=parseInt(duration);
-
+    
+    if(time_period==null)
+    {
+        media.child(snap.getKey()).remove();
+    }
     if(time_period!=null && duration > time_period)
     {
 
