@@ -45,7 +45,34 @@ $(document).ready(function(){
 
 
 // check on media every hour then delete nodes depend on time period
-setInterval(function(){
+// setInterval(function(){
+//     var media=database.ref().child("Media");
+//     media.on("child_added",snap => {
+//         var timer=snap.child("time").val();
+//     var time_period=snap.child("timePeriod").val();
+//     var media_date=moment.unix(timer/1000).format('DD MMM YYYY, h:mm a');
+//     var current_date=moment(new Date());
+//     var duration=moment.duration(current_date.diff(media_date)).asHours();
+//     duration=parseInt(duration);
+//
+//     if(time_period==null)
+//     {
+//         media.child(snap.getKey()).remove();
+//     }
+//     if(time_period!=null && duration > time_period)
+//     {
+//
+//         media.child(snap.getKey()).remove();
+//         // console.log(time_period);
+//         // console.log(duration);
+//     }
+//
+// });
+// },1000*60*60);
+
+
+
+function refreshData(){
     var media=database.ref().child("Media");
     media.on("child_added",snap => {
         var timer=snap.child("time").val();
@@ -54,7 +81,7 @@ setInterval(function(){
     var current_date=moment(new Date());
     var duration=moment.duration(current_date.diff(media_date)).asHours();
     duration=parseInt(duration);
-    
+
     if(time_period==null)
     {
         media.child(snap.getKey()).remove();
@@ -68,4 +95,7 @@ setInterval(function(){
     }
 
 });
-},1000*60*60);
+    setTimeout(refreshData,1000*60*60);
+}
+
+refreshData();
